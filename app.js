@@ -25,10 +25,6 @@ const itemSchema = new mongoose.Schema({
 const Item = mongoose.model("Task", itemSchema);
 
 
-
-// let items = ["Buy Food", "Cook food", "Eat food"];
-// let workItems = [];
-
 // for ejs
 app.set('view engine', 'ejs');
 
@@ -57,7 +53,6 @@ const List = mongoose.model("List", listSchema);
 
 app.get("/", function(req, res) {
     
-
     Item.find({}, function(err, foundItems){
         if(foundItems.length === 0) {
             Item.insertMany(defaultItems, function(err){
@@ -103,9 +98,6 @@ app.post("/delete", function(req, res) {
     
     const checkedItemId = req.body.checkbox;
     const listName = req.body.listName;
-
-    console.log(checkedItemId);
-    console.log(listName);
 
     if(listName === "Today") {
         Item.findByIdAndRemove(checkedItemId, function(err) {
@@ -159,17 +151,12 @@ app.get("/:listName", function(req, res) {
             }
         }
     });
-
-
-
-    
 }); 
 
 let port = process.env.PORT;
 if (port == null || port == "") {
     port = 3000;
 }
-app.listen(port);
 
 
 app.listen(port, function() {
